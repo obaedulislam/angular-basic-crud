@@ -1,0 +1,47 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+        <button ngbNavLink>Add User</button>
+        <ng-template ngbNavContent>
+            <form [formGroup]="userForm" (ngSubmit)="SubmitForm()">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="yourName" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="yourName" name="yourName" formControlName="yourName"
+                            placeholder="Enter name">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="phone" class="form-label">Mobile Number:</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" formControlName="phone"
+                            placeholder="Enter Mobile Number">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6 form-group">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                            placeholder="Enter email">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="age" class="form-label">Age:</label>
+                        <input type="number" class="form-control" id="age" name="age" formControlName="age"
+                            placeholder="Enter age">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="d-flex justify-content-end col-md-6 offset-md-6 gap-3">
+                        <button type="submit" class="btn btn-primary d-inline-block">Submit</button>
+                        <button type="reset" class="btn btn-secondary d-inline-block">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+        <button ngbNavLink>User List</button>
+        <ng-template ngbNavContent>
+            <p>User List</p>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
