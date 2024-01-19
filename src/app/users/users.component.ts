@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-users',
@@ -11,7 +12,7 @@ export class UsersComponent implements OnInit {
   userForm: any;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: CommonService) {
     this.userForm = this.fb.group({
       yourName: [''],
       email: [''],
@@ -26,7 +27,9 @@ export class UsersComponent implements OnInit {
   }
 
   SubmitForm() {
-    this.submitted = true;
-    console.log(this.userForm.value);
+    this.service.AddUser(this.userForm.value).subscribe(data => {
+      alert("Added");
+      console.log(data);
+    })
   }
 }

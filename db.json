@@ -1,0 +1,47 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title"
+    },
+    {
+      "id": "2",
+      "title": "another title"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "email": 1,
+      "name": "Some comment",
+      "mobile": 1,
+      "Age": 1
+    },
+    {
+      "id": "aca7",
+      "yourName": "obaedul islam",
+      "email": "obaedul@redlimesolutions.com",
+      "phone": "+8801313191479",
+      "age": 12
+    },
+    {
+      "id": "3a5e",
+      "yourName": "nesar uddin",
+      "email": "nesar@test.com",
+      "phone": "101313191479",
+      "age": 24
+    }
+  ]
+}
