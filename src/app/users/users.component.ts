@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { CommonService } from '../service/common.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -26,18 +27,33 @@ export class UsersComponent implements OnInit {
     this.GetAllUsers();
   }
 
-  SubmitForm() {
-    const type = this.userForm.value.id ? 'update' : 'add';
 
-    this.service.AddUser(this.userForm.value, type).subscribe(data => {
-      if (type === 'add') {
-        alert('Added');
-      } else {
-        alert('Updated');
-      }
-      this.userForm.reset();
-      this.GetAllUsers();
-    });
+  SubmitForm() {
+    if (this.userForm.value.userName && this.userForm.value.phone && this.userForm.value.email && this.userForm.value.age) {
+      const type = this.userForm.value.id ? 'update' : 'add';
+
+      this.service.AddUser(this.userForm.value, type).subscribe(data => {
+        if (type === 'add') {
+          Swal.fire({
+            icon: 'success',
+            title: 'User (' + this.userForm.value.userName + ') Saved successfully',
+          })
+        } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'User (' + this.userForm.value.userName + ') Updated successfully',
+          })
+        }
+        this.userForm.reset();
+        this.GetAllUsers();
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Please add user info correctly'
+      })
+    }
+
   }
 
   GetAllUsers() {
@@ -47,9 +63,25 @@ export class UsersComponent implements OnInit {
     });
   }
 
+
+  DeleteConfirmation(id: any) {
+    Swal.fire({
+      icon: 'warning',
+      title: "Do you want to Delete this user?",
+      showCancelButton: true,
+      confirmButtonText: "Save",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.DeleteUserById(id);
+      } else if (result.isDenied) {
+        Swal.fire("changes are not saved", "", "info");
+      }
+    });
+  }
+
   DeleteUserById(id: any) {
     this.service.DeleteUserById(id).subscribe(data => {
-      alert("User deleted");
+      Swal.fire("Deleted", "", "success");
       this.GetAllUsers();
     });
   }
