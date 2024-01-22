@@ -1,12 +1,12 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
     <li [ngbNavItem]="1">
-        <button ngbNavLink>Add User</button>
-        <ng-template ngbNavContent>
+        <button ngbNavLink id="addUser" href="home">Add User</button>
+        <ng-template ngbNavContent id="home">
             <form [formGroup]="userForm" (ngSubmit)="SubmitForm()">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="yourName" class="form-label">Name:</label>
-                        <input type="text" class="form-control" id="yourName" name="yourName" formControlName="yourName"
+                        <label for="userName" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="userName" name="userName" formControlName="userName"
                             placeholder="Enter name">
                     </div>
                     <div class="col-md-6 form-group">
@@ -37,9 +37,35 @@
         </ng-template>
     </li>
     <li [ngbNavItem]="2">
-        <button ngbNavLink>User List</button>
-        <ng-template ngbNavContent>
-            <p>User List</p>
+        <button ngbNavLink id="profile">User List</button>
+        <ng-template ngbNavContent id="profileTab">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let i= index">
+                        <th scope="row">{{user.id}}</th>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.phone}}</td>
+                        <td>{{user.age}}</td>
+                        <td>
+                            <button (click)=" GetUserById(user.id)" type="button"
+                                class="btn btn-primary me-2">Edit</button>
+                            <button (click)="DeleteUserById(user.id)" type="button"
+                                class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </ng-template>
     </li>
 </ul>
