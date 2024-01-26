@@ -10,13 +10,17 @@ export class CommonService {
 
   constructor(private http: HttpClient) { }
 
+
+
   AddUser(User: any, type: any): Observable<any> {
-    if (type == "add") {
-      return this.http.post(this.url + "Users", User);
+    if (type === "add") {
+      const { id, ...userWithoutId } = User;
+      return this.http.post(this.url + "Users", userWithoutId);
     } else {
       return this.http.put(this.url + "Users/" + User.id, User);
     }
   }
+
   GetAllUsers(): Observable<any> {
     return this.http.get(this.url + "Users");
   }

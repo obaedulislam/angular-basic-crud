@@ -15,12 +15,13 @@ export class UsersComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private service: CommonService) {
     this.userForm = this.fb.group({
-      id: [''],
+      id: [null], // or id: [undefined]
       userName: [''],
       email: [''],
       phone: [''],
       age: ['']
     });
+
   }
 
   ngOnInit(): void {
@@ -28,21 +29,59 @@ export class UsersComponent implements OnInit {
   }
 
 
-  SubmitForm() {
-    if (this.userForm.value.userName && this.userForm.value.phone && this.userForm.value.email && this.userForm.value.age) {
-      const type = this.userForm.value.id ? 'update' : 'add';
+  // SubmitForm() {
+  //   if (this.userForm.value.userName && this.userForm.value.phone && this.userForm.value.email && this.userForm.value.age) {
+  //     const type = this.userForm.value.id ? 'update' : 'add';
 
-      this.service.AddUser(this.userForm.value, type).subscribe(data => {
+  //     this.service.AddUser(this.userForm.value, type).subscribe(data => {
+  //       if (type === 'add') {
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: 'User (' + this.userForm.value.userName + ') Saved successfully',
+  //         })
+  //       } else {
+  //         Swal.fire({
+  //           icon: 'success',
+  //           title: 'User (' + this.userForm.value.userName + ') Updated successfully',
+  //         })
+  //       }
+  //       this.userForm.reset();
+  //       this.GetAllUsers();
+  //     });
+  //   } else {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Please add user info correctly'
+  //     })
+  //   }
+
+  // }
+
+
+  SubmitForm() {
+    const isUpdate = !!this.userForm.value.id;
+
+    if (
+      this.userForm.value.userName && this.userForm.value.phone && this.userForm.value.email && this.userForm.value.age
+    ) {
+      const userPayload = {
+        ...this.userForm.value,
+        id: isUpdate ? this.userForm.value.id : null
+      };
+
+      const type = isUpdate ? 'update' : 'add';
+
+      this.service.AddUser(userPayload, type).subscribe(data => {
         if (type === 'add') {
           Swal.fire({
             icon: 'success',
             title: 'User (' + this.userForm.value.userName + ') Saved successfully',
-          })
+          });
         } else {
           Swal.fire({
             icon: 'success',
             title: 'User (' + this.userForm.value.userName + ') Updated successfully',
-          })
+          });
         }
         this.userForm.reset();
         this.GetAllUsers();
@@ -51,10 +90,11 @@ export class UsersComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Please add user info correctly'
-      })
+      });
     }
-
   }
+
+
 
   GetAllUsers() {
     this.service.GetAllUsers().subscribe(data => {
