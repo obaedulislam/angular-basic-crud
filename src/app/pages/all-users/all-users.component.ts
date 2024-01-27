@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { CommonService } from '../service/common.service';
+import { CommonService } from 'src/app/service/common.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-all-users',
+  templateUrl: './all-users.component.html',
+  styleUrls: ['./all-users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class AllUsersComponent implements OnInit {
   active = 1;
   userForm: any;
   users: any;
